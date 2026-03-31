@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class Contacto {
+private:
+  string nombre, telefono, email;
+public:
+// Constructor
+  Contacto(string n, string t, string e) {
+     nombre = n;
+     telefono = t;
+     email = e;
+  }
+// Getters
+   string getNombre() const { return nombre; }
+   string getTelefono() const { return telefono; }
+   string getEmail() const { return email; }
+// Mostrar contacto
+  void mostrar() const {
+     cout << "Nombre: " << nombre 
+          << ", Teléfono: " << telefono 
+          << ", Email: " << email << endl;
+  }
+};
+
+class Agenda {
+private:
+  vector<Contacto> contactos;
+// Método privado para verificar duplicados
+   bool existeContacto(const string& nombre) const {
+      for(const auto& c : contactos) {
+      if(c.getNombre() == nombre) {
+        return true;
+      }
+    }
+        return false;
+}
+public:
+// Agregar contacto (evita duplicados por nombre)
+  void agregar(const Contacto& c) {
+      if(!existeContacto(c.getNombre())) {
+         contactos.push_back(c);
+         cout << "Contacto agregado correctamente." << endl;
+     } else {
+         cout << "Error: ya existe un contacto con ese nombre." << endl;
+     }
+  }
+// Eliminar contacto por nombre
+  void eliminar(const string& nombre) {
+     for (auto it = contactos.begin(); it != contactos.end(); ++it) {
+        if (it->getNombre() == nombre) {
+           contactos.erase(it);
+          cout << "Contacto eliminado." << endl;
+           return;
+        }
+    }
+      cout << "No se encontró el contacto." << endl;
+}
+// Buscar contacto por nombre
+   void buscar(const string& nombre) const {
+     for (const auto& c : contactos) {
+       if (c.getNombre() == nombre) {
+          cout << "Contacto encontrado: ";
+          c.mostrar();
+          return;
+       }
+     }
+      cout << "No se encontró el contacto." << endl;
+}
+// Mostrar todos los contactos
+  void mostrarTodos() const { f
+    if (contactos.empty()) {
+       cout << "La agenda está vacía." << endl;
+         return;
+    }
+    cout << "Lista de contactos:" << endl;
+    for (const auto& c : contactos) {
+      c.mostrar();
+    }
+ }
+};
+// Probar uso de la clase
+int main() {
+Agenda agenda;
+  Contacto c1("Lauren", "59374508", "lauren@gmail.com");
+  Contacto c2("Carlos", "55556780", "carlos@gmail.com");
+  Contacto c3("Lauren", "56559999", "lauren@gmail.com"); // duplicado (ya existe un contacto con ese nombre)
+    agenda.agregar(c1);
+    agenda.agregar(c2);
+    agenda.agregar(c3); // rechazado por duplicado 
+  agenda.mostrarTodos();
+    agenda.buscar("Carlos");
+    agenda.eliminar("Laura");
+    agenda.mostrarTodos();
+return 0;
+}
