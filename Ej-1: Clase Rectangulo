@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+class Rectangulo {
+private:
+double base;
+double altura;
+public:
+// Constructor
+Rectangulo (double b, double h) {
+setBase(b);
+setAltura(h);
+}
+// Setters con validacion 
+void setBase (double b) {
+if (b>0) {
+base=b;
+} else {
+cout <<"Error: la base del rectangulo debe ser positiva." <<endl;
+base=1;
+}
+}
+void setAltura (double h) {
+if (h>0) {
+altura=h;
+} else {
+cout <<"Error: la altura del rectangulo debe ser positiva."<<endl;
+altura=1;
+}
+}
+// Getters
+double getBase() const {
+return base;
+}
+double getAltura() const {
+return altura;
+}
+// Métodos de cálculo
+double calcularArea() const {
+return base*altura;
+}
+double calcularPerimetro() const {
+return 2*(base+altura);
+}
+};
+// Probar uso de la clase
+int main() {
+Rectangulo r1(10, 5);
+cout << "Base:" << r1.getBase() <<endl;
+cout << "Altura:" << r1.getAltura() <<endl;
+cout << "Área:" << r1.calcularArea() <<endl;
+cout << "Perímetro:" << r1.calcularPerimetro() <<endl;
+return 0;
+}
