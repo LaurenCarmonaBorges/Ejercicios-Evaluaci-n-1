@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class Estudiante {
+private:
+string nombre, carnet;
+vector<double> calificaciones;
+public:
+// Constructor
+Estudiante(string n, string c) {
+nombre=n;
+carnet=c;
+}
+// Método para agregar calificaciones con validación
+void agregarCalificacion(double nota) {
+if(nota>=0 & nota<=100) {
+calificaciones.push_back(nota);
+} else {
+cout << "Error: la calificación no se encuentra en el intervalo válido, debe estar entre 0 y 100."
+}
+}
+// Método para calcular el promedio
+double calcularPromedio() const{
+if(calificaciones.empty()) {
+cout << "No hay calificaciones registradas." <<endl;
+return 0.0;
+}
+double suma=0;
+for(double nota: calificaciones) {
+suma+=nota;
+}
+return suma/calificaciones.size();
+}
+// Método para mostrar información del estudiante
+void mostrarInfo() const{
+cout << "Nombre: " << nombre <<endl;
+cout << "Carnet: " << carnet <<endl;
+cout << "Calificaciones: ";
+for(double nota : calificaciones) {
+cout << nota << " ";
+}
+cout <<endl;
+cout << "Promedio: " << calcularPromedio() <<endl;
+}
+};
+// Probar el uso de la clase
+int main() {
+Estudiante e1("Lauren Carmona", "2026-1234");
+e1.agregarCalificacion(85);
+e1.agregarCalificacion(92);
+e1.agregarCalificacion(99);
+e1.agregarCalificacion(105); //Error: No se encuentra en el intervalo válido
+e1.mostrarInfo();
+return 0;
+}
