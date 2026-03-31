@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+class Reloj {
+private:
+int horas, minutos, segundos;
+public:
+// Constructor con validacion
+Reloj(int h, int m, int s) {
+if(h>=0 & h<=23) horas=h;
+else {
+cout << "Las horas estan fuera del rango válido, se asigna 0." <<endl;
+horas=0;
+}
+if(m>=0 & m<=59) minutos=m;
+else {
+cout <<Los minutos estan fuera del rango válido, se asigna 0." <<endl;
+minutos=0;
+}
+if(s>=0 & s<=59) segundos=s;
+else {
+cout <<Los segundos estan fuera del rango válido, se asigna 0." <<endl;
+segundos=0;
+}
+}
+// Método para avanzar un segundo
+void avanzarSegundo() {
+segundos++;
+if(segundos==60) {
+segundos=0;
+minutos++;
+if(minutos==60) {
+minutos=0;
+horas++;
+if(horas==24){
+horas=0;
+}
+}
+}
+}
+// Método para mostrar la hora en formato HH:MM:SS
+void mostrarHora() const {
+cout << setfill('0') << setw(2) << horas << ":"
+<< setfill('0') << setw(2) << minutos << ":"
+<< setfill('0') << setw(2) << segundos << ":" <<endl;
+}
+};
+// Probar el uso de la clase
+int main() {
+Reloj r1(23:59:58);
+cout << "Hora inicial: ";
+r1.mostrarHora();
+r1.avanzarSegundo();
+cout << "Despues de un segundo: ";
+r1.mostrarHora();
+r1.avanzarSegundo();
+cout << "Despues de dos segundos: ";
+r1.mostrarHora();
+return 0;
+}
