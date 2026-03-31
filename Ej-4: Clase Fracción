@@ -1,0 +1,79 @@
+#include <iostream>
+using namespace std;
+class Fraccion {
+private:
+int numerador, denominador;
+// Método privado para simplificar la fracción
+void simplificar() {
+     int mcd = gcd(numerador, denominador);
+     numerador /= mcd;
+     denominador /= mcd;
+// Mantener el signo en el numerador
+      if (denominador < 0) {
+      numerador = -numerador;
+      denominador = -denominador;
+   }
+}
+public:
+// Constructor con validación
+Fraccion(int num, int den) {
+     if (den == 0) {
+      cout << "Error: el denominador no puede ser cero. Se asigna 1." << endl;
+        numerador = num;
+        denominador = 1;
+     } else {
+        numerador = num;
+        denominador = den;
+     }
+        simplificar();
+}
+// Métodos de operaciones
+Fraccion sumar(const Fraccion& otra) const {
+    int num = numerador  otra.denominador + otra.numerador  denominador;
+    int den = denominador*otra.denominador;
+    return Fraccion(num, den);
+}
+Fraccion restar(const Fraccion& otra) const {
+    int num = numerador  otra.denominador - otra.numerador  denominador;
+    int den = denominador * otra.denominador;
+    return Fraccion(num, den);
+}
+Fraccion multiplicar(const Fraccion& otra) const {
+     int num = numerador * otra.numerador;
+     int den = denominador * otra.denominador;
+     return Fraccion(num, den);
+}
+Fraccion dividir(const Fraccion& otra) const {
+    if (otra.numerador == 0) {
+      cout << "Error: el denominador no puede ser igual a cero. Se devuelve la misma fracción." << endl;
+      return *this;
+    }
+      int num = numerador * otra.denominador;
+      int den = denominador * otra.numerador;
+      return Fraccion(num, den);
+}
+// Método para obtener el valor real (decimal)
+   double valorReal() const {
+     return static_cast<double>(numerador) / denominador;
+}
+// Mostrar fracción
+  void mostrar() const {
+    cout << numerador << "/" << denominador;
+  }
+};
+// Probar uso de la clase
+int main() {
+ Fraccion f1(2, 4);   // se simplifica a 1/2
+ Fraccion f2(3, 5);
+  cout << "f1 = "; f1.mostrar(); cout << " = " << f1.valorReal() << endl;
+  cout << "f2 = "; f2.mostrar(); cout << " = " << f2.valorReal() << endl;
+ Fraccion suma = f1.sumar(f2);
+  cout << "f1 + f2 = "; suma.mostrar(); cout << " = " << suma.valorReal() << endl;
+ Fraccion resta = f1.restar(f2);
+  cout << "f1 - f2 = "; resta.mostrar(); cout << " = " << resta.valorReal() << endl;
+ Fraccion mult = f1.multiplicar(f2);
+  cout << "f1 * f2 = "; mult.mostrar(); cout << " = " << mult.valorReal() << endl;
+ Fraccion div = f1.dividir(f2);
+  cout << "f1 / f2 = "; div.mostrar(); cout << " = " << div.valorReal() << endl;
+return 0;
+}
