@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+class Fecha {
+private:
+  int dia, mes, año;
+// Método privado: determinar si un año es bisiesto
+    bool esBisiesto(int a) const {
+       return (a % 4 == 0 & a % 100 != 0) || (a % 400 == 0);
+}
+// Método privado: obtener días del mes
+    int diasEnMes(int m, int a) const {
+       switch(m) {
+       case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+          return 31;
+        case 4: case 6: case 9: case 11:
+          return 30;
+        case 2:
+          return esBisiesto(a) ? 29 : 28;
+     default:
+          return 0;
+      }
+  }
+// Validar fecha
+    bool fechaValida(int d, int m, int a) const {
+       if (a < 1 || m < 1 || m > 12) return false;
+       int maxDias = diasEnMes(m, a);
+       return (d >= 1 && d <= maxDias);
+    }
+public:
+// Constructor con validación
+Fecha(int d, int m, int a) {
+    if (fechaValida(d, m, a)) {
+         dia = d;
+         mes = m;
+         año = a;
+    } else {
+         cout << "Fecha inválida, se asigna 1/1/2000." << endl;
+         dia = 1;
+         mes = 1;
+         año = 2000;
+    }
+}
+// Método avanzar un día
+    void avanzarUnDia() {
+      dia++;
+       if (dia > diasEnMes(mes, año)) {
+          dia = 1;
+          mes++;
+       if (mes > 12) {
+          mes = 1;
+          año++;
+       }
+     }
+   }
+// Método comparar: devuelve -1, 0, 1
+  int comparar(const Fecha& otra) const {
+    if (año < otra.año) return -1;
+    if (año > otra.año) return 1;
+    if (mes < otra.mes) return -1;
+    if (mes > otra.mes) return 1;
+    if (dia < otra.dia) return -1;
+    if (dia > otra.dia) return 1;
+     return 0;
+    }
+// Mostrar fecha
+    void mostrar() const {
+      cout << dia << "/" << mes << "/" << año << endl;
+    }
+};
+// Probar uso de la clase
+int main() {
+ Fecha f1(28, 2, 2024); // año bisiesto
+  cout << "Fecha inicial: "; f1.mostrar();
+  f1.avanzarUnDia();
+  cout << "Después de avanzar un día: "; f1.mostrar();
+ Fecha f2(1, 3, 2024);
+  cout << "Comparación f1 con f2: " << f1.comparar(f2) << endl; 
+// -1 si f1 < f2, 0 si iguales, 1 si f1 > f2
+return 0;
+}
